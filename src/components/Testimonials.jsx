@@ -4,7 +4,7 @@ export default function Testimonials() {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    fetch("https://script.google.com/macros/s/AKfycbzowvuWwuwAvntBZ7wi1evT5lFdYSeCeB3IC36x5NgblSE1NragIEocMXfV4_NNSyovIw/exec")
+    fetch("https://script.google.com/macros/s/AKfycbx3ji0MiXp5xuDQmJj4D2jSVjMpPJltfHual_WsyLX6XnDmVUkE869q6BiOrt_PfDNOGw/exec")
       .then(res => res.json())
       .then(data => setReviews(data.slice(-6).reverse()));
   }, []);
