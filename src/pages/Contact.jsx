@@ -20,11 +20,17 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (form.whatsapp.length < 10) {
+      alert("Please enter a valid WhatsApp number");
+      return;
+    }
+
     setLoading(true);
     setSuccess(false);
 
     try {
-      // 1️⃣ Send data to Google Sheets
+      // 1️⃣ Save to Google Sheet
       await fetch(
         "https://script.google.com/macros/s/AKfycbwlTC6kejSK4eIDQsVtLv3cSmTYBRMXmmwe1kCDVpSzQ1X2ihS2Xz1eosnf5EhVL4m5mA/exec",
         {
@@ -33,7 +39,7 @@ export default function Contact() {
         }
       );
 
-      // 2️⃣ Prepare WhatsApp message
+      // 2️⃣ WhatsApp message
       const message = `
 Hi CodeVibe 👋
 I submitted a project request.
@@ -57,7 +63,7 @@ Please contact me.
       setWhatsappURL(url);
       setSuccess(true);
 
-      // 3️⃣ Reset form fields
+      // 3️⃣ Reset form
       setForm({
         name: "",
         college: "",
@@ -66,7 +72,7 @@ Please contact me.
         whatsapp: "",
         message: "",
       });
-    } catch (error) {
+    } catch (err) {
       alert("Something went wrong. Please try again.");
     }
 
@@ -74,26 +80,28 @@ Please contact me.
   };
 
   return (
-    <section className="min-h-screen pt-32 px-6 bg-gradient-to-br from-purple-50 to-indigo-50">
-      <div className="max-w-3xl mx-auto bg-white p-10 rounded-3xl shadow-xl">
-        <h2 className="text-3xl font-bold text-center text-gray-900">
+    <section className="min-h-screen pt-28 px-4 sm:px-6 bg-gradient-to-br from-purple-50 to-indigo-50">
+      <div className="max-w-xl mx-auto bg-white p-6 sm:p-10 rounded-3xl shadow-xl">
+
+        {/* HEADER */}
+        <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-900">
           Contact CodeVibe
         </h2>
 
-        <p className="text-center text-gray-600 mt-2">
+        <p className="text-center text-gray-600 mt-2 text-sm sm:text-base">
           Fill the form and we’ll contact you shortly
         </p>
 
-        {/* SUCCESS MESSAGE + WHATSAPP BUTTON */}
+        {/* SUCCESS */}
         {success && (
           <div className="mt-6 text-center">
-            <p className="text-green-600 font-medium mb-4">
+            <p className="text-green-600 font-medium mb-4 text-sm sm:text-base">
               ✅ Submitted successfully!
             </p>
 
             <button
               onClick={() => (window.location.href = whatsappURL)}
-              className="w-full bg-green-500 text-white py-3 rounded-xl font-semibold hover:bg-green-600 transition"
+              className="w-full bg-green-500 text-white py-3 rounded-xl font-semibold text-sm sm:text-base hover:bg-green-600 transition"
             >
               Continue to WhatsApp
             </button>
@@ -102,14 +110,15 @@ Please contact me.
 
         {/* FORM */}
         {!success && (
-          <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+
             <input
               name="name"
               value={form.name}
               onChange={handleChange}
               placeholder="Your Name"
               required
-              className="w-full p-4 border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-3 sm:p-4 text-sm sm:text-base border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
 
             <input
@@ -118,7 +127,7 @@ Please contact me.
               onChange={handleChange}
               placeholder="College Name"
               required
-              className="w-full p-4 border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-3 sm:p-4 text-sm sm:text-base border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
 
             <input
@@ -127,7 +136,7 @@ Please contact me.
               onChange={handleChange}
               placeholder="Department"
               required
-              className="w-full p-4 border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-3 sm:p-4 text-sm sm:text-base border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
 
             <input
@@ -136,7 +145,7 @@ Please contact me.
               onChange={handleChange}
               placeholder="Project Domain (AI / Java / Web etc.)"
               required
-              className="w-full p-4 border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-3 sm:p-4 text-sm sm:text-base border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
 
             <input
@@ -145,7 +154,8 @@ Please contact me.
               onChange={handleChange}
               placeholder="Your WhatsApp Number"
               required
-              className="w-full p-4 border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+              inputMode="numeric"
+              className="w-full p-3 sm:p-4 text-sm sm:text-base border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
 
             <textarea
@@ -154,13 +164,18 @@ Please contact me.
               onChange={handleChange}
               placeholder="Tell us about your project"
               rows="4"
-              className="w-full p-4 border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-3 sm:p-4 text-sm sm:text-base border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-4 rounded-xl font-semibold hover:scale-105 transition"
+              className={`w-full py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base transition
+                ${
+                  loading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:scale-105"
+                }`}
             >
               {loading ? "Submitting..." : "Submit"}
             </button>

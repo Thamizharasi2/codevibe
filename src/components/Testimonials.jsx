@@ -29,20 +29,20 @@ export default function Testimonials() {
   return (
     <section className="bg-white py-20 px-6">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl font-bold text-gray-900">
+        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
           What Students Say
         </h2>
-        <p className="mt-3 text-gray-600">
-          Trusted by students across different domains
+        <p className="mt-3 text-gray-600 text-sm sm:text-base">
+          Real feedback from students across different domains
         </p>
 
         <Swiper
           modules={[Autoplay]}
-          autoplay={{ delay: 3000 }}
-          loop={true}
-          spaceBetween={30}
+          autoplay={{ delay: 2500, disableOnInteraction: false }}
+          loop
+          spaceBetween={20}
           breakpoints={{
-            640: { slidesPerView: 1 },
+            0: { slidesPerView: 1 },
             768: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
           }}
@@ -50,16 +50,17 @@ export default function Testimonials() {
         >
           {testimonials.map((item, index) => (
             <SwiperSlide key={index}>
-              <div className="bg-gradient-to-br from-purple-50 to-indigo-50 p-6 rounded-2xl shadow-md hover:shadow-xl transition hover:-translate-y-2 h-full">
-                <p className="text-gray-700 italic">
+              <div className="h-full bg-gradient-to-br from-purple-50 to-indigo-50 p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between">
+                
+                <p className="text-gray-700 italic text-sm sm:text-base leading-relaxed">
                   “{item.feedback}”
                 </p>
 
-                <div className="mt-4 font-semibold text-primary">
+                <div className="mt-4 text-yellow-500 text-lg">
                   ⭐⭐⭐⭐⭐
                 </div>
 
-                <h4 className="mt-2 text-gray-900 font-medium">
+                <h4 className="mt-2 text-gray-900 font-semibold text-sm sm:text-base">
                   — {item.name}
                 </h4>
               </div>
