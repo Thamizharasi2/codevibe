@@ -82,7 +82,7 @@ export default function Footer() {
 
       {/* COPYRIGHT */}
       <div className="border-t border-white/20 text-center py-4 text-purple-200 text-xs sm:text-sm">
-        © {new Date().getFullYear()} CodeVibe. All rights reserved.
+        © 2025 CodeVibe. All rights reserved.
       </div>
     </footer>
   );
